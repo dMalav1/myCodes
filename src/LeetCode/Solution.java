@@ -49,6 +49,43 @@ public class Solution{
 	            return dummy.next;
 	        }
 
+	        public int lengthOfLongestSubstring(String s) {
+	            int ans = 0;
+	            if (s.length() == 0) {
+	                return ans;
+	            }
+	            char[] charArr = s.toCharArray();
+	            int start = 0, end = 0;
+	            ans = 1;
+	            int prevIdx = -1;
+	            for (int i = 1; i < charArr.length; i++) {
+	                prevIdx = lastIdx(charArr, charArr[i], start, end);
+	                
+	                if (prevIdx == - 1) { // char has not repeated
+	                    end++;
+	                } else { // char has repeated
+	                    ans = updatedAns(ans, start, end);
+	                    // need to restart from the index next to the earlier occurance of the current char
+	                    start = prevIdx + 1;
+	                    end++;
+	                }
+	            }
+	            return updatedAns(ans, start, end);
+	        }
+	        
+	        private int lastIdx(char[] charArr, char c, int start, int end) {
+	            for (int i = start; i <= end; i++) {
+	                if (charArr[i] == c) {
+	                    return i;
+	                }
+	            }
+	            return -1;
+	        }
+	        
+	        private int updatedAns(int ans, int start, int end) {
+	            int currSubstringLength = end + 1 - start;
+	            return currSubstringLength > ans ? currSubstringLength : ans;
+	        }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
