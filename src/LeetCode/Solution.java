@@ -139,6 +139,49 @@ public class Solution{
 	        		return e.substring(resE-resL,resE);
 
 	            }
+	            
+	            
+	            class Solution {
+	                public String convert(String s, int numRows) {
+	                    // obvious, if no of rows are 1 or string is empty return as it is
+	                        if (numRows == 1 || s == null) {
+	                            return s;
+	                        }
+
+	                        // to find out how many cols needed
+	                        int col = 0;
+
+	                        // to hold real pattern
+	                        char[][] pattern = new char[numRows][1000];
+
+	                        for (int row = 0, i =0; i < s.length() ; row++, i++) {
+	                            // start filling the pattern array
+	                            pattern[row][col] = s.charAt(i);
+
+	                            // once you reached to the max numbers of rows ( -1 as array index starts with 0 ) 
+	                            if ( row == numRows - 1) {
+	                                while (row > 0 && ++i < s.length()) {
+	                                    // start filling in reverse order, till you reach the top or length of string is exhausted
+	                                    pattern[--row][++col] = s.charAt(i);
+	                                }
+	                            }
+	                        }
+	                    // done print it.
+	                    return printString(pattern, s.length(), numRows, col+1);
+	                }
+	                
+	                public String printString(char[][] pattern, int length, int numRows, int numCols) {
+	                    StringBuilder result = new StringBuilder(numRows*numCols);
+	                    for (int row =0; row < numRows ; row++) {
+	                        for (int col =0 ; col < numCols; col++) {
+	                            if (pattern[row][col] != '\u0000') {
+	                               result.append(pattern[row][col]);
+	                            }    
+	                        }
+	                    }
+	                    return result.toString();
+	                }
+	            }
 	        
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
