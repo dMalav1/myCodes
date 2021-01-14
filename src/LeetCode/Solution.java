@@ -181,6 +181,59 @@ public class Solution{
 	                    }
 	                    return result.toString();
 	                }
+	                
+	                
+	                class Solution {
+	                    public int myAtoi(String s) {
+	                        s = s.trim()+" ";
+	                        int i=0;
+	                        String temp = "";
+	                        if(s.charAt(0) =='+' || s.charAt(0) == '-'){
+	                            temp = temp+s.charAt(0);i++;
+	                        }
+	                        while(s.charAt(i) != ' ' && s.charAt(i)>= '0' && s.charAt(i)<='9'){
+	                            temp = temp + s.charAt(i);
+	                            i++;
+	                        }
+	                        try{
+	                            return (int)Double.parseDouble(temp);
+	                        }
+	                        catch(Exception e){
+	                            return 0;
+	                        }
+	                    }
+	                }
+	                class Solution {
+	                    
+	                    // TC: O(n)
+	                    // SC : O(n)
+	                    public int minOperations(int[] nums, int x) {
+	                        int totalSum = 0;
+	                        for(int el: nums){
+	                            totalSum += el;
+	                        }
+	                        int target = totalSum - x;
+	                        
+	                        Map<Integer, Integer> map = new HashMap<>();
+	                        map.put(0, -1);
+	                        int maxLenSubArray = -1;
+	                        int prefixSum = 0;
+	                        for(int i=0;i<nums.length;i++){
+	                            prefixSum += nums[i];
+	                            map.put(prefixSum, i);
+	                            if(map.containsKey(prefixSum - target)){
+	                                int currLenSubArray = i - map.get(prefixSum - target);
+	                                maxLenSubArray = Math.max(maxLenSubArray, currLenSubArray);
+	                            }
+	                        }
+	                        
+	                        if(maxLenSubArray == -1){
+	                            return maxLenSubArray;
+	                        } else{
+	                            return nums.length - maxLenSubArray;
+	                        }
+	                    }
+	                }                                                                                                                 
 	            }
 	        
 	public static void main(String[] args) {
