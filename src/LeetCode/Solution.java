@@ -235,6 +235,28 @@ public class Solution{
 	                    }
 	                }                                                                                                                 
 	            }
+	            
+	            class Solution {
+	                public int countVowelStrings(int n) {
+	                    // dp[i][j]: for first i vowels of length j, what is the unique lexicon pattern count
+	                    // divid into two groups, one with only i - vowels dp[i-1][j], the other that must contain at least 1 i-th vowel
+	                    // the second group's last letter must be i-th vowel, because they all unique, the count of them is actually
+	                    // dp[i][j - 1];
+	                    // transformation func: dp[i][j] = dp[i -1][j] + dp[i][j-1]
+	                    // for init, dp[1][*] = 1, dp[1][0] = 1
+	                    // we can transfer the problem into 1-D dp, so dp[i] += dp[i - 1], scan from left to right
+	                    // for init dp[0] = 1
+	                    int[] dp = new int[n + 1];
+	                    dp[0] = 1;
+	                    for (int i = 0; i < 5; i++) {
+	                        for (int j = 1; j <= n; j++) {
+	                            dp[j] += dp[j - 1];
+	                        }
+	                    }
+	                    return dp[n];
+	                    
+	                }
+	            }
 	        
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
